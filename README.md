@@ -5,7 +5,7 @@
 
 # Phantom Strike 
 
-This Python-based subdomain scanner tool allows you to perform DNS resolution and HTTP/HTTPS status code validation on subdomains. It supports multi-threading, external wordlist integration, delay management, and advanced checks like CNAME verification and page title extraction. The tool is designed to help ethical hackers and security researchers discover and analyze subdomains efficiently.
+Phantom Strike is a Python-based subdomain scanner tool designed to assist ethical hackers and security researchers in efficiently discovering and analyzing subdomains. It supports DNS resolution and validation of HTTP/HTTPS status codes, with advanced features such as CNAME record verification and page title extraction. The tool offers multi-threading capabilities, seamless integration with external wordlists, and customizable delay settings, ensuring a fast and flexible scanning process.
 
 ## Features
 
