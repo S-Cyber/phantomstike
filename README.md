@@ -3,7 +3,7 @@
 </p>
 
 
-# SubHunter 
+# Phantom Strike 
 
 This Python-based subdomain scanner tool allows you to perform DNS resolution and HTTP/HTTPS status code validation on subdomains. It supports multi-threading, external wordlist integration, delay management, and advanced checks like CNAME verification and page title extraction. The tool is designed to help ethical hackers and security researchers discover and analyze subdomains efficiently.
 
