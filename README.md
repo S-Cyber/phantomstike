@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/S-Cyber/phantomstrike/blob/main/main/Icon/PS-Icon.png" width="200">
+  <img src="https://github.com/S-Cyber/phantomstike/blob/main/main/Icon/PhantomStrike-ICO.png" width="200">
 </p>
 
 
