@@ -53,6 +53,6 @@ This will scan the subdomains listed in `subdomains.txt` for the domain `example
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the GPL-3.0 License.
 
 ---
