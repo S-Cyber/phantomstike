@@ -9,6 +9,47 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 from bs4 import BeautifulSoup  # Untuk mengambil judul halaman
 
+banner = """                                                                                                                                                    
+                                @                                     @@                              
+                               @@@@@                                @@@@                              
+                               @@@@@@@@                          @@@@@@@@                             
+                               @@@@   @@@                      @@@   @@@@                             
+                              @@  @@    @@@                 @@@@    @@ @@                             
+                              @@  @@       @@@            @@@      @@   @                             
+                              @@   @@        @@@@@@@@@@@@@@        @@   @@                            
+                              @@    @@        @@        @@        @@    @@                            
+                             @@     @@        @@        @@        @@     @                            
+                             @@      @@       @@        @@       @@      @@                           
+                             @@      @@       @@        @@      @@       @@                           
+                            @@        @@      @@        @@      @@       @@                           
+                            @@   @@@@@@@      @@        @@      @@@@@@   @@                           
+                            @@@@              @@        @@             @@@@@                          
+                            @                 @@        @@               @@@                          
+                            @         @@@@@@@@@          @@@@@@@@        @@@                          
+                            @  @@@@@@@@@                        @@@@@@@@ @@@                          
+                            @@@                                         @@@                           
+                             @                                           @@                           
+                             @@      @@@@@@@               @@@@@@@@      @                            
+                              @@     @@    @@@            @@    @@@     @@                            
+                              @@      @@@@@@@@@          @@@@@@@@      @@                             
+                               @@       @@@   @@@      @@@   @@@       @@                             
+                                @@@            @@     @@             @@@                              
+                                  @@@           @     @@          @@@@                                
+                                     @@@        @     @@       @@@                                    
+                                       @@@      @     @@     @@@                                      
+                                         @@     @@    @@     @@                                       
+                                         @@     @@@@@@@@    @@                                        
+                                          @@    @@@  @@@   @@@                                        
+                                            @@@   @@@@  @@@@                                          
+                                               @@@@@@@@@@                                             
+                                                  @@@@                                                
+                                                                                                                                                                                                            
+"""
+
+print(banner)
+
+
+
 def check_status_code(url, status_codes, target_domain):
     """
     Memeriksa status kode HTTP dan mengabaikan redirect ke luar domain utama.
