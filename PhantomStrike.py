@@ -3,11 +3,11 @@ import argparse
 import time
 import dns.resolver
 import requests
-import socket  # Import socket untuk mendapatkan IP address
+import socket  
 from urllib.parse import urlparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
-from bs4 import BeautifulSoup  # Untuk mengambil judul halaman
+from bs4 import BeautifulSoup 
 
 banner = """                                                                                                                                                    
                                 @                                     @@                              
@@ -55,17 +55,17 @@ def check_status_code(url, status_codes, target_domain):
     Memeriksa status kode HTTP dan mengabaikan redirect ke luar domain utama.
     """
     try:
-        response = requests.get(url, timeout=5, allow_redirects=False)  # Tidak mengikuti redirect otomatis
+        response = requests.get(url, timeout=5, allow_redirects=False) 
         status_code = response.status_code
 
-        # Jika ada redirect (3xx) dan mengarah ke luar domain, abaikan
+       
         if 300 <= status_code < 400 and 'Location' in response.headers:
             redirected_url = response.headers['Location']
             parsed_redirect = urlparse(redirected_url)
             redirected_domain = parsed_redirect.netloc
 
             if redirected_domain and not redirected_domain.endswith(target_domain):
-                return None, None  # Abaikan hasil ini
+                return None, None  
 
         if not status_codes or status_code in status_codes:
             return True, status_code
@@ -102,14 +102,14 @@ def scan_subdomain(subdomain, domain, delay, check_cname, status_codes, progress
     """
     full_domain = f"{subdomain.strip()}.{domain}"
 
-    # Resolusi DNS untuk memeriksa A record
+    
     try:
         dns.resolver.resolve(full_domain, 'A')
     except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN, dns.exception.Timeout):
-        progress.update(1)  # Update progress bar
-        return None  # Subdomain tidak ditemukan di DNS
+        progress.update(1)  
+        return None 
 
-    # Pengecekan CNAME jika --cname diaktifkan
+    
     if check_cname:
         try:
             cname_result = dns.resolver.resolve(full_domain, 'CNAME')
@@ -118,17 +118,17 @@ def scan_subdomain(subdomain, domain, delay, check_cname, status_codes, progress
         except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN):
             pass
 
-    # Verifikasi HTTP/HTTPS dan pengecekan status kode
+    
     for protocol in ["http", "https"]:
         url = f"{protocol}://{full_domain}"
         valid, status_code = check_status_code(url, status_codes, domain)
         if valid:
             ip = get_ip_from_subdomain(full_domain)
             title = None
-            if title_option:  # Jika opsi --title diaktifkan
+            if title_option:  
                 title = get_title_from_subdomain(url)
-            progress.update(1)  # Update progress bar
-            if ip_option:  # Jika opsi --ip diaktifkan
+            progress.update(1)  
+            if ip_option: 
                 result = f"{full_domain} --> {ip}"
                 if title:
                     result += f" (Title: {title})"
@@ -137,7 +137,7 @@ def scan_subdomain(subdomain, domain, delay, check_cname, status_codes, progress
                     with open(output_file, 'a') as f:
                         f.write(result + '\n')
                 return full_domain, ip
-            elif ip_only:  # Jika opsi --ip-only diaktifkan
+            elif ip_only: 
                 if ip:
                     result = f"{ip}"
                     tqdm.write(f"[+] {result}")
@@ -147,7 +147,7 @@ def scan_subdomain(subdomain, domain, delay, check_cname, status_codes, progress
                     return ip
                 else:
                     return None
-            else:  # Jika hanya subdomain yang valid
+            else:  
                 result = f"{full_domain}"
                 if title:
                     result += f" (Title: {title})"
@@ -157,7 +157,7 @@ def scan_subdomain(subdomain, domain, delay, check_cname, status_codes, progress
                         f.write(result + '\n')
                 return full_domain, ip
 
-    progress.update(1)  # Update progress bar jika tidak ditemukan hasil valid
+    progress.update(1)  
     return None
 
 def main():
@@ -177,7 +177,7 @@ def main():
 
     args = parser.parse_args()
 
-    # Membaca wordlist dari file dan membersihkan baris kosong
+    
     try:
         with open(args.wordlist, "r") as f:
             subdomains = [line.strip() for line in f if line.strip()]
@@ -185,20 +185,21 @@ def main():
         print(f"Error: File {args.wordlist} tidak ditemukan!")
         return
 
-    # Menulis header jika output file ditentukan
+    
     if args.output:
         with open(args.output, 'w') as f:
             f.write("Hasil subdomain yang valid:\n")
 
-    # Menggunakan ThreadPoolExecutor untuk menjalankan scanning secara paralel
+    
     with ThreadPoolExecutor(max_workers=args.threads) as executor, tqdm(total=len(subdomains), desc="Scanning Progress", position=0, leave=True) as progress:
         futures = []
         for subdomain in subdomains:
             futures.append(executor.submit(scan_subdomain, subdomain, args.domain, args.delay, args.cname, args.status_code, progress, args.ip_only, args.ip, args.output, args.title))
         
-        # Menunggu hasil dan menampilkan subdomain yang valid
+     
         for future in as_completed(futures):
-            future.result()  # Memastikan semua proses selesai
+            future.result()  
 
 if __name__ == "__main__":
     main()
+
